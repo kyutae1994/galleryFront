@@ -8,6 +8,9 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import store from "@/scripts/store";
+import axios from "axios";
+import {useRoute} from "vue-router";
+import {watch} from "vue";
 
 export default {
   name: 'App',
@@ -15,12 +18,19 @@ export default {
     Footer,
     Header
   },
-  setup(){
-    const id = sessionStorage.getItem("id");
+  setup() {
+    const check = () => {
+      axios.get("/api/account/check").then(({data}) => {
+        console.log(data);
+        store.commit("setAccount", data || 0); // 데이터 값이 있으면 data 넣어주고 없으면 0
+      })
+    };
 
-    if (id) {
-      store.commit("setAccount", id);
-    }
+    const route = useRoute();
+
+    watch(route, () => { // 수가 바뀔때마다 check 실행(감시)
+      check();
+    })
   }
 }
 </script>
