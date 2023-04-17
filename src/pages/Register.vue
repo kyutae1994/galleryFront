@@ -6,7 +6,7 @@
       <input type="email" class="form-control" id="floatingInput" placeholder="example@example.com"
              @keyup.enter="submit()" v-model="state.form.email">
       <label for="floatingInput">Email address</label>
-      <div v-if="idValid">
+      <div v-if="state.check">
         중복된 email 입니다.
       </div>
     </div>
@@ -34,7 +34,8 @@ export default {
       form: {
         email: "",
         password: ""
-      }
+      },
+      check: false
     })
 
     const submit = () => {
@@ -50,9 +51,7 @@ export default {
 
     const duplicate = () => {
       axios.post("/api/account/duplicate", state.form).then((res) => {
-        let check = res.data;
-        window.alert(check);
-        return check;
+        state.check = res.data;
       })
     }
 
