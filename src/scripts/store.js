@@ -1,16 +1,12 @@
 import {createStore} from 'vuex'
 
 const store = createStore({
-    state() {
-        return {
-            account: {
-                id: 0
-            }
-        }
+    state: {
+        token: null
     },
     mutations: {
-        setAccount(state, payload) {
-            state.account.id = payload;
+        setToken(state, token) {
+            state.token = token;
         }
     }
 })
