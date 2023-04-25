@@ -21,9 +21,9 @@ export default {
     }
   },
   created() {
-    const id = sessionStorage.getItem('id');
-    if(id) {
-      store.commit('setUser', id);
+    const token = localStorage.getItem('accessToken');
+    if(token) {
+      store.commit('setToken', token);
     }
   }
 }
