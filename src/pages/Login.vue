@@ -28,6 +28,7 @@ import {reactive} from "vue";
 import axios from "axios";
 import store from "@/scripts/store";
 import router from "@/scripts/router";
+import setAuthHeader from "@/scripts/setAuthHeader";
 
 export default {
   setup() {
@@ -42,6 +43,7 @@ export default {
       axios.post("/api/account/login", state.form).then((res) => {
         store.commit('setToken', res.data);
         localStorage.setItem('accessToken', res.data);
+        setAuthHeader(res.data);
         router.push({path: "/"});
         window.alert('로그인 되었습니다.');
       }).catch(()=>{
