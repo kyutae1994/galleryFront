@@ -9,11 +9,11 @@
               <li>
                 <router-link to="/" class="text-white">메인 화면</router-link>
               </li>
-              <li v-if="$store.state.token">
+              <li v-if="isLogin">
                 <router-link to="/orders" class="text-white">주문 내역</router-link>
               </li>
               <li>
-                <router-link to="/login" class="text-white" v-if="!$store.state.token">로그인</router-link>
+                <router-link to="/login" class="text-white" v-if="!isLogin">로그인</router-link>
                 <a to="/login" class="text-white" @click="logout()" v-else>로그아웃</a>
               </li>
             </ul>
@@ -52,16 +52,19 @@ import axios from "axios";
 export default {
   name: 'Header',
   setup() {
+    // TODO - isLogin에 watch같이 동적으로 값 변경을 확인하는 기능 추가하기
+    const isLogin = store.getters.USER_TOKEN_STATE;
     const logout = () => {
       axios.post("/api/account/logout").then(() => {
         store.commit('setToken',null);
-        sessionStorage.removeItem('accessToken');
         alert('로그아웃하였습니다.');
-        router.push({path: "/"});
+        router.push({path: "/login"});
       });
     }
 
-    return {logout};
+    return {
+      isLogin, logout
+    };
   }
 }
 </script>

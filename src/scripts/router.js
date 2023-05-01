@@ -1,10 +1,10 @@
-import Home from "@/pages/Home.vue";
-import Login from "@/pages/Login.vue";
-import Cart from "@/pages/Cart.vue";
-import Order from "@/pages/Order";
+import Home from "@/views/Home.vue";
+import Login from "@/views/Login.vue";
+import Cart from "@/views/Cart.vue";
+import Order from "@/views/Order";
 import {createRouter, createWebHistory} from "vue-router";
-import Orders from "@/pages/Orders.vue";
-import Register from "@/pages/Register.vue";
+import Orders from "@/views/Orders.vue";
+import Register from "@/views/Register.vue";
 
 const routes = [
     {path: '/', component: Home},  // 루트 경로로 들어오면 component를 Home으로 연결을 해라

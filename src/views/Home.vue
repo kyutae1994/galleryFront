@@ -12,7 +12,7 @@
   </div>
 </template>
 <script>
-import Card from "@/pages/Card";
+import Card from "@/views/Card";
 import axios from "axios";
 import {reactive} from "vue";
 

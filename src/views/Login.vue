@@ -25,10 +25,9 @@
 
 <script>
 import {reactive} from "vue";
-import axios from "axios";
 import store from "@/scripts/store";
 import router from "@/scripts/router";
-import setAuthHeader from "@/scripts/setAuthHeader";
+import http from "@/scripts/http";
 
 export default {
   setup() {
@@ -40,12 +39,10 @@ export default {
     })
 
     const submit = () => {
-      axios.post("/api/account/login", state.form).then((res) => {
-        store.commit('setToken', res.data);
-        localStorage.setItem('accessToken', res.data);
-        setAuthHeader(res.data);
+      http.post("/api/account/login", state.form).then((res) => {
+        store.commit('setToken', res.data.responseData);
         router.push({path: "/"});
-        window.alert('로그인 되었습니다.');
+        window.alert('로그인 되었습니다.'+ store.getters.USER_TOKEN_STATE);
       }).catch(()=>{
         window.alert("로그인 정보가 존재하지 않습니다.");
       });
