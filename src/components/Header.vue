@@ -9,11 +9,11 @@
               <li>
                 <router-link to="/" class="text-white">메인 화면</router-link>
               </li>
-              <li v-if="isLogin">
+              <li v-if="isLogin != null">
                 <router-link to="/orders" class="text-white">주문 내역</router-link>
               </li>
               <li>
-                <router-link to="/login" class="text-white" v-if="!isLogin">로그인</router-link>
+                <router-link to="/login" class="text-white" v-if="isLogin == null">로그인</router-link>
                 <a to="/login" class="text-white" @click="logout()" v-else>로그아웃</a>
               </li>
             </ul>
@@ -32,7 +32,7 @@
           </svg>
           <strong>Gallery</strong>
         </router-link>
-        <router-link to="/cart" class="cart btn" v-if="$store.state.token">
+        <router-link to="/cart" class="cart btn" v-if="isLogin != null">
           <i class="fa fa-shopping-cart" aria-hidden="true"></i>
         </router-link>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarHeader"
@@ -44,29 +44,25 @@
   </header>
 </template>
 
-<script>
+<script setup>
 import store from "@/scripts/store";
 import router from "@/scripts/router";
 import axios from "axios";
+import {watch} from "vue";
 
-export default {
-  name: 'Header',
-  setup() {
-    // TODO - isLogin에 watch같이 동적으로 값 변경을 확인하는 기능 추가하기
-    const isLogin = store.getters.USER_TOKEN_STATE;
-    const logout = () => {
-      axios.post("/api/account/logout").then(() => {
-        store.commit('setToken',null);
-        alert('로그아웃하였습니다.');
-        router.push({path: "/login"});
-      });
-    }
-
-    return {
-      isLogin, logout
-    };
-  }
+// TODO - isLogin에 watch같이 동적으로 값 변경을 확인하는 기능 추가하기
+let isLogin = "";
+watch(isLogin, () => {
+  isLogin = store.getters.USER_TOKEN_STATE;
+})
+const logout = () => {
+  axios.post("/api/account/logout").then(() => {
+    store.commit('setToken',null);
+    alert('로그아웃하였습니다.');
+    router.push({path: "/login"});
+  });
 }
+
 </script>
 <style scoped>
 header ul li a {
