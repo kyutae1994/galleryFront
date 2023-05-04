@@ -14,6 +14,11 @@ const store = {
         USER_TOKEN_STATE(state) {
             return state.token;
         }
+    },
+    actions: {
+        setToken:({commit}, token) => {
+            commit('setToken', token);
+        }
     }
 }
 

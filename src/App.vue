@@ -7,25 +7,19 @@
 <script>
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import store from "@/scripts/store";
 
 export default {
   name: 'App',
   components: {
     Footer,
     Header
-  },
-  data() {
-    return{
-      id: ''
-    }
-  },
-  created() {
-    const token = localStorage.getItem('accessToken');
-    if(token) {
-      store.commit('setToken', token);
-    }
   }
+  // created() {
+  //   const token = localStorage.getItem('accessToken');
+  //   if(token) {
+  //     store.commit('setToken', token);
+  //   }
+  // }
 }
 </script>
 

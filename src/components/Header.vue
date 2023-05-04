@@ -48,12 +48,10 @@
 import store from "@/scripts/store";
 import router from "@/scripts/router";
 import axios from "axios";
-import {watch} from "vue";
+import {computed} from "vue";
 
-// TODO - isLogin에 watch같이 동적으로 값 변경을 확인하는 기능 추가하기
-let isLogin = "";
-watch(isLogin, () => {
-  isLogin = store.getters.USER_TOKEN_STATE;
+const isLogin = computed(() => {
+  return store.getters.USER_TOKEN_STATE;
 })
 const logout = () => {
   axios.post("/api/account/logout").then(() => {
