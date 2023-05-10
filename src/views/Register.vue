@@ -109,7 +109,9 @@ export default {
     const duplicate = () => {
       axios.post("/api/account/duplicate", state.form).then((res) => {
         state.check = res.data;
-        state.cntCheck = 1;
+        if (!state.check) {
+          state.cntCheck = 1;
+        }
       })
     }
 
