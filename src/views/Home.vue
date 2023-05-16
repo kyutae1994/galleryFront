@@ -13,8 +13,8 @@
 </template>
 <script>
 import Card from "@/views/Card";
-import axios from "axios";
 import {reactive} from "vue";
+import http from "@/scripts/http";
 
 export default {
   name: "Home",
@@ -24,7 +24,7 @@ export default {
       items: []
     })
 
-    axios.get("/api/items").then((res) => {
+    http.get("/api/items").then((res) => {
       state.items = res.data;
     })
 

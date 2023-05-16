@@ -40,7 +40,9 @@ export default {
 
     const submit = () => {
       http.post("/api/account/login", state.form).then((res) => {
-        store.commit('setToken', res.data.responseData);
+        store.commit('setToken', res.data.responseData.accessToken);
+        // store.commit('setToken', res.data.responseData.accessToken);
+        // store.commit('setRefreshToken', res.data.responseData.refreshToken);
         router.push({path: "/"});
         window.alert('로그인 되었습니다.'+ store.getters.USER_TOKEN_STATE);
       }).catch(()=>{
