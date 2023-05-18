@@ -7,10 +7,8 @@ const instance = axios.create({
 
 instance.interceptors.request.use(
     function (config) {
-        window.alert(store.getters.USER_TOKEN_STATE);
         if (store.getters.USER_TOKEN_STATE) {
             config.headers.Authorization = "Bearer " + store.getters.USER_TOKEN_STATE;
-            window.alert(config.headers.Authorization);
         }
 
         return config;
