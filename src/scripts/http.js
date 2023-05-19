@@ -9,6 +9,7 @@ instance.interceptors.request.use(
     function (config) {
         if (store.getters.USER_TOKEN_STATE) {
             config.headers.Authorization = "Bearer " + store.getters.USER_TOKEN_STATE;
+            config.headers.Refreshtoken = store.getters.USER_REFRESHTOKEN_STATE;
         }
 
         return config;
