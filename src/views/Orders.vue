@@ -28,9 +28,9 @@
 </template>
 
 <script>
-import axios from "axios";
 import {reactive} from "vue";
 import lib from "@/scripts/lib";
+import http from "@/scripts/http";
 
 export default {
   setup() {
@@ -38,8 +38,9 @@ export default {
       orders: []
     })
 
-    axios.get("/api/orders").then((res) => {
+    http.get("/api/orders").then((res) => {
       state.orders = [];
+      window.alert(res.data);
       for (let d of res.data) {
         if (d.items) {
           d.items = JSON.parse(d.items);
