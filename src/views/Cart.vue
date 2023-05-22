@@ -18,6 +18,7 @@
 import axios from "axios";
 import {reactive} from "vue";
 import lib from "@/scripts/lib";
+import http from "@/scripts/http";
 
 export default {
   setup() {
@@ -26,7 +27,7 @@ export default {
     })
 
     const load = () => {
-      axios.get("/api/cart/items").then((res) => {
+      http.get("/api/cart/items").then((res) => {
         console.log(res.data);
         state.items = res.data;
       })

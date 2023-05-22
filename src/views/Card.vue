@@ -24,7 +24,7 @@
 </template>
 <script>
 import lib from "@/scripts/lib";
-import axios from "axios";
+import http from "@/scripts/http";
 
 export default {
   name: "Card",
@@ -33,7 +33,7 @@ export default {
   },
   setup() {
     const addToCart = (itemId) => {
-      axios.post(`/api/cart/items/${itemId}`).then(() => {
+      http.post(`/api/cart/items/${itemId}`).then(() => {
         console.log('success')
       })
     }

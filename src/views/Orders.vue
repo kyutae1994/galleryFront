@@ -31,6 +31,7 @@
 import {reactive} from "vue";
 import lib from "@/scripts/lib";
 import http from "@/scripts/http";
+import store from "@/scripts/store";
 
 export default {
   setup() {
@@ -39,9 +40,12 @@ export default {
     })
 
     http.get("/api/orders").then((res) => {
+      store.commit('setToken', res.data.responseData.accessToken);
+      store.commit('setRefreshToken', res.data.responseData.refreshToken);
+
       state.orders = [];
-      window.alert(res.data);
-      for (let d of res.data) {
+      window.alert(res.data.orders);
+      for (let d of res.data.orders) {
         if (d.items) {
           d.items = JSON.parse(d.items);
         }
