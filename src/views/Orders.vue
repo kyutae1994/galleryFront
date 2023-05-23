@@ -32,6 +32,7 @@ import {reactive} from "vue";
 import lib from "@/scripts/lib";
 import http from "@/scripts/http";
 import store from "@/scripts/store";
+import router from "@/scripts/router";
 
 export default {
   setup() {
@@ -52,7 +53,11 @@ export default {
         state.orders.push(d);
       }
       state.orders = res.data;
-    })
+    }).catch(()=>{
+      store.commit('setToken',null);
+      store.commit('setRefreshToken',null);
+      router.push({path: "/login"});
+    });
 
     return {state, lib}
   }

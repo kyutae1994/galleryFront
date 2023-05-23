@@ -5,21 +5,15 @@
 </template>
 
 <script>
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
+import Footer from "@/components/Footer.vue";
+import Header from "@/components/Header.vue";
 
 export default {
   name: 'App',
   components: {
-    Footer,
-    Header
+    Header,
+    Footer
   }
-  // created() {
-  //   const token = localStorage.getItem('accessToken');
-  //   if(token) {
-  //     store.commit('setToken', token);
-  //   }
-  // }
 }
 </script>
 
