@@ -45,14 +45,14 @@ export default {
       store.commit('setRefreshToken', res.data.responseData.refreshToken);
 
       state.orders = [];
-      window.alert(res.data.orders);
-      for (let d of res.data.orders) {
+      window.alert(res.data.responseData.orders);
+      for (let d of res.data.responseData.orders) {
         if (d.items) {
           d.items = JSON.parse(d.items);
         }
         state.orders.push(d);
       }
-      state.orders = res.data;
+      state.orders = res.data.responseData.orders;
     }).catch(()=>{
       store.commit('setToken',null);
       store.commit('setRefreshToken',null);

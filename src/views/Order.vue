@@ -96,8 +96,8 @@ export default {
 
     const load = () => {
       http.get("/api/cart/items").then((res) => {
-        console.log(res.data);
-        state.items = res.data;
+        console.log(res.data.responseData.itemList);
+        state.items = res.data.responseData.itemList;
       })
     };
 

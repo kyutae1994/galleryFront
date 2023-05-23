@@ -25,7 +25,7 @@ export default {
     })
 
     http.get("/api/items").then((res) => {
-      state.items = res.data;
+      state.items = res.data.responseData.itemList;
     })
 
     return {state}

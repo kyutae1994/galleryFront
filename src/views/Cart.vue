@@ -15,7 +15,6 @@
 </template>
 
 <script>
-import axios from "axios";
 import {reactive} from "vue";
 import lib from "@/scripts/lib";
 import http from "@/scripts/http";
@@ -28,13 +27,13 @@ export default {
 
     const load = () => {
       http.get("/api/cart/items").then((res) => {
-        console.log(res.data);
-        state.items = res.data;
+        console.log(res.data.responseData.itemList);
+        state.items = res.data.responseData.itemList;
       })
     };
 
     const remove = (itemId) => {
-      axios.delete(`/api/cart/items/${itemId}`).then(() => {
+      http.delete(`/api/cart/items/${itemId}`).then(() => {
         load();
       })
     }
