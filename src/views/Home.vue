@@ -15,6 +15,8 @@
 import Card from "@/views/Card";
 import {reactive} from "vue";
 import http from "@/scripts/http";
+import store from "@/scripts/store";
+import router from "@/scripts/router";
 
 export default {
   name: "Home",
@@ -26,7 +28,11 @@ export default {
 
     http.get("/api/items").then((res) => {
       state.items = res.data.responseData.itemList;
-    })
+    }).catch(()=>{
+      store.commit('setToken',null);
+      store.commit('setRefreshToken',null);
+      router.push({path: "/login"});
+    });
 
     return {state}
   }
