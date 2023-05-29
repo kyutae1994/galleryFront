@@ -1,106 +1,81 @@
 <template>
-  <v-container>
-    <v-expansion-panel>
-      <v-expansion-panel-header><h1>채팅</h1></v-expansion-panel-header>
-      <v-expansion-panel-content>
-        <v-card class="mt-2">
-          <v-card-title><h2>채팅 테스트</h2></v-card-title>
-          <v-card-text>
-            <v-alert
-                dense
-                type="info"
-                color="teal lighten-3"
-            >두개 이상의 브라우저를 띄워 간단한 채팅을 확인해 볼 수 있다.</v-alert>
-            <v-container>
-              uid :
-              <input
-                  v-model="uid"
-                  type="text"
-              >
-              message :
-              <input
-                  v-model="message"
-                  type="text"
-                  @keyup="sendMessage"
-              >
-              <div
-                  class="mt-2"
-                  v-for="(item, idx) in recvList"
-                  :key="idx"
-              >
-                <v-card
-                    class="mt-2 mb-2"
-                    color="teal lighten-3"
-                    dark
-                    max-width="400"
-                >
-                  <v-card-text>
-                    <div>uid : {{ item.user.id }}</div>
-                    <div>{{ item.message }}</div>
-                    <div>{{ item.sendAt }}</div>
-                  </v-card-text>
-                </v-card>
-              </div>
-            </v-container>
-          </v-card-text>
-        </v-card>
-      </v-expansion-panel-content>
-    </v-expansion-panel>
-  </v-container>
+  <div id="app">
+    유저이름:
+    <input
+        v-model="userName"
+        type="text"
+    >
+    내용: <input
+      v-model="message"
+      type="text"
+      @keyup="sendMessage"
+  >
+    <div
+        v-for="(item, idx) in recvList"
+        :key="idx"
+    >
+      <h3>유저이름: {{ item.userName }}</h3>
+      <h3>내용: {{ item.content }}</h3>
+    </div>
+  </div>
 </template>
 
-<script lang="js">
+<script>
 import Stomp from 'webstomp-client'
 import SockJS from 'sockjs-client'
 
 export default {
+  name: 'Chat',
   data() {
     return {
-      uid: '',
-      message: '',
+      userName: "",
+      message: "",
       recvList: []
     }
   },
   created() {
-    this.connect() // ChattingView.vue 생성 시 소켓 연결 시도
+    // Chat.vue가 생성되면 소켓 연결을 시도합니다.
+    this.connect()
   },
   methods: {
-    sendMessage(e) {
-      if(e.keyCode === 13 && this.uid !== '' && this.message !== '') {
-        this.send();
-        this.message = '';
+    sendMessage (e) {
+      if(e.keyCode === 13 && this.userName !== '' && this.message !== ''){
+        this.send()
+        this.message = ''
       }
     },
     send() {
       console.log("Send message:" + this.message);
       if (this.stompClient && this.stompClient.connected) {
         const msg = {
-          user: {
-            id: this.uid
-          },
-          message: this.message,
-          sendAt: Date.now(),
-          isRequest: false,
+          userName: this.userName,
+          content: this.message
         };
         this.stompClient.send("/receive", JSON.stringify(msg), {});
       }
     },
     connect() {
-      const serverURL = "http://localhost:8080"
+      const serverURL = "http://localhost:8080/api/chat"
       let socket = new SockJS(serverURL);
       this.stompClient = Stomp.over(socket);
       console.log(`소켓 연결을 시도합니다. 서버 주소: ${serverURL}`)
       this.stompClient.connect(
           {},
           frame => {
+            // 소켓 연결 성공
             this.connected = true;
             console.log('소켓 연결 성공', frame);
+            // 서버의 메시지 전송 endpoint를 구독합니다.
+            // 이런형태를 pub sub 구조라고 합니다.
             this.stompClient.subscribe("/send", res => {
               console.log('구독으로 받은 메시지 입니다.', res.body);
+
+              // 받은 데이터를 json으로 파싱하고 리스트에 넣어줍니다.
               this.recvList.push(JSON.parse(res.body))
             });
           },
           error => {
+            // 소켓 연결 실패
             console.log('소켓 연결 실패', error);
             this.connected = false;
           }
