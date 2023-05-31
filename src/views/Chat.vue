@@ -14,8 +14,8 @@
         v-for="(item, idx) in recvList"
         :key="idx"
     >
-      <h3>유저이름: {{ item.userName }}</h3>
-      <h3>내용: {{ item.content }}</h3>
+      <h3>유저이름: {{ item.body.userName }}</h3>
+      <h3>내용: {{ item.body.message }}</h3>
     </div>
   </div>
 </template>
@@ -38,8 +38,8 @@ export default {
     this.connect()
   },
   methods: {
-    sendMessage (e) {
-      if(e.keyCode === 13 && this.userName !== '' && this.message !== ''){
+    sendMessage(e) {
+      if (e.keyCode === 13 && this.userName !== '' && this.message !== '') {
         this.send()
         this.message = ''
       }
@@ -49,7 +49,7 @@ export default {
       if (this.stompClient && this.stompClient.connected) {
         const msg = {
           userName: this.userName,
-          content: this.message
+          message: this.message
         };
         this.stompClient.send("/message", JSON.stringify(msg), {});
       }
