@@ -52,5 +52,9 @@ export default {
 }
 </script>
 <style scoped>
-
+.popup{
+  float: right;
+  padding: 10px;
+  margin-right: 200px;
+}
 </style>

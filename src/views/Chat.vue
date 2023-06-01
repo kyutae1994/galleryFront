@@ -14,8 +14,8 @@
         v-for="(item, idx) in recvList"
         :key="idx"
     >
-      <h3>유저이름: {{ item.body.userName }}</h3>
-      <h3>내용: {{ item.body.message }}</h3>
+      <h3>유저이름: {{ item.body.responseData.userName }}</h3>
+      <h3>내용: {{ item.body.responseData.message }}</h3>
     </div>
   </div>
 </template>
@@ -34,7 +34,7 @@ export default {
     }
   },
   created() {
-    // Chat.vue가 생성되면 소켓 연결을 시도합니다.
+    // Chat.vue가 생성되면 소켓 연결을 시도.
     this.connect()
   },
   methods: {
@@ -51,13 +51,14 @@ export default {
           userName: this.userName,
           message: this.message
         };
+        // 서버로 메시지 보냄.
         this.stompClient.send("/message", JSON.stringify(msg), {});
       }
     },
     connect() {
       const serverURL = "http://localhost:8080/ws"
-      let socket = new SockJS(serverURL);
-      this.stompClient = Stomp.over(socket);
+      let socket = new SockJS(serverURL);  // 소켓 생성
+      this.stompClient = Stomp.over(socket);  // stompClient를 이용해 소켓 연결
       console.log(`소켓 연결을 시도합니다. 서버 주소: ${serverURL}`)
       this.stompClient.connect(
           {},
@@ -65,9 +66,9 @@ export default {
             // 소켓 연결 성공
             this.connected = true;
             console.log('소켓 연결 성공', frame);
-            // 서버의 메시지 전송 endpoint를 구독합니다.
-            // 이런형태를 pub sub 구조라고 합니다.
-            this.stompClient.subscribe("/send/messages", res => {
+            // 서버의 메시지 전송 endpoint를 구독.
+            // 서버에서 메시지 받음.
+            this.stompClient.subscribe("/topic/messages", res => {
               console.log('구독으로 받은 메시지 입니다.', res.body);
 
               // 받은 데이터를 json으로 파싱하고 리스트에 넣어줍니다.
