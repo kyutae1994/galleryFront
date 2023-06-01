@@ -5,7 +5,6 @@ import Order from "@/views/Order";
 import {createRouter, createWebHistory} from "vue-router";
 import Orders from "@/views/Orders.vue";
 import Register from "@/views/Register.vue";
-import Chat from "@/views/Chat.vue";
 
 const routes = [
     {path: '/', component: Home},  // ex) 루트 경로로 들어오면 component를 Home으로 연결을 해라
@@ -14,7 +13,6 @@ const routes = [
     {path: '/order', component: Order},
     {path: '/orders', component: Orders},
     {path: '/register', component: Register},
-    {path: '/chat', component: Chat}
 ]
 
 const router = createRouter({
