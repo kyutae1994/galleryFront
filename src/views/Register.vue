@@ -49,8 +49,8 @@
 
 <script>
 import {reactive} from "vue";
-import axios from "axios";
 import router from "@/scripts/router";
+import http from "@/scripts/http";
 
 export default {
   setup() {
@@ -97,7 +97,7 @@ export default {
         return;
       }
       if (state.cntCheck > 0) {
-        axios.post("/api/account/register", state.form).then(() => {
+        http.post("/api/account/register", state.form).then(() => {
           router.push({path: "/login"});
           window.alert('회원가입 되었습니다.');
         }).catch(() => {
@@ -107,8 +107,8 @@ export default {
     }
 
     const duplicate = () => {
-      axios.post("/api/account/duplicate", state.form).then((res) => {
-        state.check = res.data;
+      http.post("/api/account/duplicate", state.form).then((res) => {
+        state.check = res.data.responseData;
         if (!state.check) {
           state.cntCheck = 1;
         }

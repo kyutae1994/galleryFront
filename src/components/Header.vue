@@ -9,6 +9,9 @@
               <li>
                 <router-link to="/" class="text-white">메인 화면</router-link>
               </li>
+              <li v-if="isLogin == null">
+                <router-link to="/register" class="text-white">회원 가입</router-link>
+              </li>
               <li v-if="isLogin != null">
                 <router-link to="/orders" class="text-white">주문 내역</router-link>
               </li>
