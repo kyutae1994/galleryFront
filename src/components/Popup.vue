@@ -62,7 +62,7 @@ export default {
       }
     },
     connect() {
-      const serverURL = "http://localhost:8080/ws"
+      const serverURL = "http://localhost:8080/api/ws"
       let socket = new SockJS(serverURL);  // 소켓 생성
       this.stompClient = Stomp.over(socket);  // stompClient를 이용해 소켓 연결
       console.log(`소켓 연결을 시도합니다. 서버 주소: ${serverURL}`)

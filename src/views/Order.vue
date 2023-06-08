@@ -94,7 +94,7 @@ export default {
     })
 
     const load = () => {
-      http.get("/api/cart/items").then((res) => {
+      http.get("/cart/items").then((res) => {
         console.log(res.data.responseData.itemList);
         state.items = res.data.responseData.itemList;
       })
@@ -104,7 +104,7 @@ export default {
       const args = JSON.parse(JSON.stringify(state.form));
       args.items = JSON.stringify(state.items);
 
-      http.post("/api/orders", args).then(() => {
+      http.post("/orders", args).then(() => {
         alert("주문 완료하였습니다.");
         router.push({path:"/orders"})
       })

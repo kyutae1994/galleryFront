@@ -39,7 +39,7 @@ export default {
     })
 
     const submit = () => {
-      http.post("/api/account/login", state.form).then((res) => {
+      http.post("/account/login", state.form).then((res) => {
         store.commit('setToken', res.data.responseData.accessToken);
         store.commit('setRefreshToken', res.data.responseData.refreshToken);
         router.push({path: "/"});

@@ -26,14 +26,14 @@ export default {
     })
 
     const load = () => {
-      http.get("/api/cart/items").then((res) => {
+      http.get("/cart/items").then((res) => {
         console.log(res.data.responseData.itemList);
         state.items = res.data.responseData.itemList;
       })
     };
 
     const remove = (itemId) => {
-      http.delete(`/api/cart/items/${itemId}`).then(() => {
+      http.delete(`/cart/items/${itemId}`).then(() => {
         load();
       })
     }

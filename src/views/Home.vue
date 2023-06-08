@@ -39,7 +39,7 @@ export default {
       popupTriggers.value[trigger] = !popupTriggers.value[trigger]
     }
 
-    http.get("/api/items").then((res) => {
+    http.get("/items").then((res) => {
       state.items = res.data.responseData.itemList;
     }).catch(()=>{
       store.commit('setToken',null);

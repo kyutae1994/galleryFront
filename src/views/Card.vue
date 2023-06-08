@@ -33,7 +33,7 @@ export default {
   },
   setup() {
     const addToCart = (itemId) => {
-      http.post(`/api/cart/items/${itemId}`).then(() => {
+      http.post(`/cart/items/${itemId}`).then(() => {
         console.log('success')
       })
     }

@@ -97,7 +97,7 @@ export default {
         return;
       }
       if (state.cntCheck > 0) {
-        http.post("/api/account/register", state.form).then(() => {
+        http.post("/account/register", state.form).then(() => {
           router.push({path: "/login"});
           window.alert('회원가입 되었습니다.');
         }).catch(() => {
@@ -107,7 +107,7 @@ export default {
     }
 
     const duplicate = () => {
-      http.post("/api/account/duplicate", state.form).then((res) => {
+      http.post("/account/duplicate", state.form).then((res) => {
         state.check = res.data.responseData;
         if (!state.check) {
           state.cntCheck = 1;

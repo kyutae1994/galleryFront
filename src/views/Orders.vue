@@ -40,7 +40,7 @@ export default {
       orders: []
     })
 
-    http.get("/api/orders").then((res) => {
+    http.get("/orders").then((res) => {
       store.commit('setToken', res.data.responseData.accessToken);
       store.commit('setRefreshToken', res.data.responseData.refreshToken);
 
